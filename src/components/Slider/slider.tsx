@@ -5,22 +5,20 @@ import {
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
 import Animated, {
-  SharedValue,
   useAnimatedGestureHandler,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
 import CircularProgres from '../CircularProgress/circular-progres';
 import styles from './slider-styles';
 
-interface SliderProps {
-  sliderWidth: SharedValue<number>;
-  progress: SharedValue<number>;
-}
-
 export const HANDLE_WIDTH = 20;
 
-const Slider: React.FC<SliderProps> = ({sliderWidth, progress}) => {
+const Slider: React.FC = () => {
+  const sliderWidth = useSharedValue<number>(0);
+  const progress = useSharedValue<number>(0);
+
   const animatedHandleStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateX: progress.value - HANDLE_WIDTH / 2}],
